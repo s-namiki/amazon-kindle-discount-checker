@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Amazon 続きを読む割引率チェッカー</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="header">
+      <img src="icons/icon48.png" alt="Logo" class="logo">
+      <h1 class="title">割引率チェッカー</h1>
+    </header>
+    
+    <main class="content">
+      <!-- 凡例/カラーマップセクション -->
+      <section class="section">
+        <h2 class="section-title">割引率しきい値と色分け</h2>
+        <div class="legend-list">
+          <div class="legend-item level-90">
+            <span class="legend-color-box color-90"></span>
+            <span class="legend-name">神割引</span>
+            <span class="legend-value">90% 以上</span>
+          </div>
+          <div class="legend-item level-70">
+            <span class="legend-color-box color-70"></span>
+            <span class="legend-name">超特価</span>
+            <span class="legend-value">70% 〜 90%</span>
+          </div>
+          <div class="legend-item level-50">
+            <span class="legend-color-box color-50"></span>
+            <span class="legend-name">大特価</span>
+            <span class="legend-value">50% 〜 70%</span>
+          </div>
+          <div class="legend-item level-30">
+            <span class="legend-color-box color-30"></span>
+            <span class="legend-name">注目</span>
+            <span class="legend-value">30% 〜 50%</span>
+          </div>
+          <div class="legend-item level-15">
+            <span class="legend-color-box color-15"></span>
+            <span class="legend-name">お得</span>
+            <span class="legend-value">15% 〜 30%</span>
+          </div>
+        </div>
+        <p class="legend-note">※ 実質割引率が 15% 未満の商品はバッジ表示およびカード装飾の対象外となります。</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

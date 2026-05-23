@@ -1,0 +1,215 @@
+/* Amazon 続きを読む割引率チェッカー用スタイル */
+
+/* ==========================================
+   カードの枠線・背景（割引レベル別・ピンク〜赤のグラデーション）
+   ========================================== */
+
+/* お得 (15%〜30%) */
+.discount-level-15 {
+  border: 2px solid #ffccd5 !important; /* ソフトピンク (kiseppe cutoff以上) */
+  background-color: rgba(255, 0, 0, 0.03) !important; /* kiseppe基準 */
+  box-shadow: 0 4px 12px rgba(255, 179, 198, 0.08) !important;
+  transition: all 0.25s ease;
+}
+.discount-level-15:hover {
+  box-shadow: 0 6px 16px rgba(255, 179, 198, 0.15) !important;
+}
+
+/* 注目 (30%〜50%) */
+.discount-level-30 {
+  border: 2px solid #ff85a1 !important; /* ローズピンク */
+  background-color: rgba(255, 0, 0, 0.06) !important; /* kiseppe基準 */
+  box-shadow: 0 4px 12px rgba(255, 117, 143, 0.1) !important;
+  transition: all 0.25s ease;
+}
+.discount-level-30:hover {
+  box-shadow: 0 6px 16px rgba(255, 117, 143, 0.2) !important;
+}
+
+/* 大特価 (50%〜70%) */
+.discount-level-50 {
+  border: 2px solid #ff4d6d !important; /* ディープピンク */
+  background-color: rgba(255, 0, 0, 0.10) !important; /* kiseppe基準 */
+  box-shadow: 0 4px 12px rgba(255, 77, 109, 0.12) !important;
+  transition: all 0.25s ease;
+}
+.discount-level-50:hover {
+  box-shadow: 0 6px 16px rgba(255, 77, 109, 0.22) !important;
+}
+
+/* 超特価 (70%〜90%) */
+.discount-level-70 {
+  border: 2px solid #ff0a54 !important; /* 濃いピンクレッド */
+  background-color: rgba(255, 0, 0, 0.14) !important; /* kiseppe基準 */
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.15) !important;
+  transition: all 0.25s ease;
+}
+.discount-level-70:hover {
+  box-shadow: 0 6px 16px rgba(255, 51, 102, 0.25) !important;
+}
+
+/* 神割引 (90%以上) */
+.discount-level-90 {
+  border: 2px dashed #ff0000 !important; /* 純赤 */
+  background-color: rgba(255, 0, 0, 0.18) !important; /* kiseppe基準 */
+  box-shadow: 0 4px 14px rgba(255, 0, 0, 0.2) !important;
+  transition: all 0.25s ease;
+  animation: pulse-border 2s infinite ease-in-out;
+}
+.discount-level-90:hover {
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35) !important;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: #ff0000;
+  }
+  50% {
+    border-color: #cc0000;
+    background-color: rgba(255, 0, 0, 0.22);
+  }
+}
+
+
+/* ==========================================
+   割引バッジ (白下敷き・黒文字・赤系グラデーション枠)
+   ========================================== */
+.amazon-discount-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px 9px;
+  border-radius: 4px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 900;
+  background-color: #ffffff; /* 下敷きをしろ */
+  color: #000000; /* 文字を黒 */
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  cursor: help;
+  user-select: none;
+  border: 2px solid #ffd1dc; /* レベル別の枠線色 */
+  line-height: 1.1;
+}
+
+/* レベル別の枠線色 (赤系グラデーション) */
+.amazon-discount-badge.discount-level-15 { border-color: #ffccd5; }
+.amazon-discount-badge.discount-level-30 { border-color: #ff85a1; }
+.amazon-discount-badge.discount-level-50 { border-color: #ff4d6d; }
+.amazon-discount-badge.discount-level-70 { border-color: #ff0a54; }
+.amazon-discount-badge.discount-level-90 {
+  border-color: #ff0000;
+  animation: pulse-badge 1s infinite alternate;
+}
+
+/* 割引率の数値をテーマ色で強調して読みやすくする */
+.amazon-discount-badge.discount-level-15 .badge-rate { color: #ff5c8a; }
+.amazon-discount-badge.discount-level-30 .badge-rate { color: #ff4d6d; }
+.amazon-discount-badge.discount-level-50 .badge-rate { color: #c9184a; }
+.amazon-discount-badge.discount-level-70 .badge-rate { color: #a4133c; }
+.amazon-discount-badge.discount-level-90 .badge-rate { color: #ff0000; }
+
+@keyframes pulse-badge {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.badge-tag {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ffccd5;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.amazon-discount-badge.discount-level-15 .badge-tag { color: #ff5c8a; }
+.amazon-discount-badge.discount-level-30 .badge-tag { color: #ff4d6d; }
+.amazon-discount-badge.discount-level-50 .badge-tag { color: #c9184a; }
+.amazon-discount-badge.discount-level-70 .badge-tag { color: #a4133c; }
+.amazon-discount-badge.discount-level-90 .badge-tag { color: #ff0000; }
+
+.badge-rate {
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+
+/* ==========================================
+   ツールチップ (ホバー時の詳細内訳 - 白下敷き・黒文字)
+   ========================================== */
+.discount-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 200px;
+  background-color: #ffffff; /* 下敷きをしろ */
+  color: #333333; /* 文字を黒 */
+  text-align: left;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 200;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: normal;
+  text-shadow: none;
+  font-size: 11px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(-5px);
+  pointer-events: none; /* ホバーの邪魔をしない */
+  border: 1px solid #ddd;
+}
+
+/* ホバー時にツールチップを表示 */
+.amazon-discount-badge:hover .discount-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.tooltip-row span {
+  color: #666666;
+}
+
+.tooltip-row strong {
+  color: #000000;
+}
+
+.text-green strong {
+  color: #27ae60 !important;
+}
+
+.text-red strong {
+  color: #c0392b !important;
+}
+
+.tooltip-divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 6px 0;
+}
+
+.total-row {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.color-highlight {
+  color: #c0392b !important; /* 赤 */
+  font-size: 13px;
+}
