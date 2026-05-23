@@ -189,49 +189,29 @@ function parseCardData(card) {
   
   const pointsPercentMatch = text.match(/ポイント[ \t]*\([ \t]*([0-9]+)%[ \t]*\)/);
   const pointsPercent = pointsPercentMatch ? parseInt(pointsPercentMatch[1], 10) : 0;
-  
-  // 5. クーポン (改行をまたがないように \s ではなく [ \t] を使用)
-  const couponPercentMatch = text.match(/([0-9]+)%[ \t]*(?:OFF|割引|の)*クーポン/i) || 
-                             text.match(/クーポン[:：]?[ \t]*([0-9]+)%[ \t]*(?:OFF)?/i);
-  const couponPercent = couponPercentMatch ? parseInt(couponPercentMatch[1], 10) : 0;
-  
-  const couponAmountMatch = text.match(/￥[ \t]*([0-9,]+)[ \t]*(?:OFF|割引|の)*クーポン/i) || 
-                            text.match(/([0-9,]+)[ \t]*円[ \t]*(?:OFF|割引|の)*クーポン/i) || 
-                            text.match(/クーポン[:：]?[ \t]*(?:￥)?[ \t]*([0-9,]+)/i);
-  const couponAmount = couponAmountMatch ? parseInt(couponAmountMatch[1].replace(/,/g, ''), 10) : 0;
 
   return {
     kindlePrice,
     printPrice,
     amazonDiscount,
     points,
-    pointsPercent,
-    couponPercent,
-    couponAmount
+    pointsPercent
   };
 }
 
 // 割引率と実質価格の計算
 function calculateDiscounts(data) {
-  const { kindlePrice, printPrice, amazonDiscount, points, couponPercent, couponAmount } = data;
+  const { kindlePrice, printPrice, amazonDiscount, points } = data;
   
   if (!kindlePrice) return null;
-  
-  // クーポン割引額の計算 (常に考慮)
-  let couponDiscount = 0;
-  if (couponPercent > 0) {
-    couponDiscount = Math.round(kindlePrice * (couponPercent / 100));
-  } else if (couponAmount > 0) {
-    couponDiscount = couponAmount;
-  }
   
   // ポイント還元額の計算 (常に考慮)
   const pointOffset = points;
   
-  // 実質価格
-  const effectivePrice = Math.max(0, kindlePrice - pointOffset - couponDiscount);
+  // 実質価格 (クーポン引きは廃止)
+  const effectivePrice = Math.max(0, kindlePrice - pointOffset);
   
-  // 基準価格の決定 (紙の本の価格があればそれを優先、なければ逆算、それもなければKindle価格)
+  // 基準価格 of 決定 (紙の本の価格があればそれを優先、なければ逆算、それもなければKindle価格)
   let basePrice = printPrice;
   if (!basePrice) {
     if (amazonDiscount > 0) {
@@ -251,7 +231,6 @@ function calculateDiscounts(data) {
     basePrice,
     effectivePrice,
     effectiveDiscountRate,
-    couponDiscount,
     pointOffset
   };
 }
@@ -346,7 +325,6 @@ function applyCardDecorations(card, data, calc) {
       <div class="tooltip-row"><span>基準価格 (紙本等):</span><strong>￥${calc.basePrice.toLocaleString()}</strong></div>
       <div class="tooltip-row"><span>Kindle価格:</span><strong>￥${data.kindlePrice.toLocaleString()}</strong></div>
       ${calc.pointOffset > 0 ? `<div class="tooltip-row text-green"><span>ポイント還元:</span><strong>-￥${calc.pointOffset.toLocaleString()}</strong></div>` : ''}
-      ${calc.couponDiscount > 0 ? `<div class="tooltip-row text-red"><span>クーポン割引:</span><strong>-￥${calc.couponDiscount.toLocaleString()}</strong></div>` : ''}
       <hr class="tooltip-divider" />
       <div class="tooltip-row total-row"><span>実質価格:</span><strong>￥${calc.effectivePrice.toLocaleString()}</strong></div>
       <div class="tooltip-row total-row"><span>実質割引率:</span><strong class="color-highlight">${formattedRate}% OFF</strong></div>
